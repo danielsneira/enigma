@@ -26,17 +26,21 @@ main(List<String> args) {
 }
 
 void encriptar(String toRead, String toWrite) {
-  String abc = 'abcdefghijklmnñopqrstuvwxyz ';
-  String zyx = 'zyxwvutsrqpoñnmlkjihgfedcba ';
+  String abc = 'abcdefghijklmnñopqrstuvwxyz1234567890 \n';
+  String zyx = 'zyxwvutsrqpoñnmlkjihgfedcba0987654321 \n';
   String enc = '';
+  bool found;
   new File(toRead).readAsString().then((String content) {
     String minus = content.toLowerCase();
     for (var i = 0; i < minus.length; i++) {
+      found = false;
       for (var j = 0; j < abc.length; j++) {
         if (minus[i] == abc[j]) {
           enc += zyx[j];
+          found = true;
         }
       }
+      if (found == false) enc += minus[i];
     }
     final fileName = './$toWrite.txt';
     new File(fileName).writeAsString(enc).then((File file) {
@@ -46,17 +50,21 @@ void encriptar(String toRead, String toWrite) {
 }
 
 void desencriptar(String toRead, String toWrite) {
-  String abc = 'abcdefghijklmnñopqrstuvwxyz ';
-  String zyx = 'zyxwvutsrqpoñnmlkjihgfedcba ';
+  String abc = 'abcdefghijklmnñopqrstuvwxyz1234567890 \n';
+  String zyx = 'zyxwvutsrqpoñnmlkjihgfedcba0987654321 \n';
   String desenc = '';
+  bool found;
   new File(toRead).readAsString().then((String content) {
     String minus = content.toLowerCase();
     for (var i = 0; i < minus.length; i++) {
+      found = false;
       for (var j = 0; j < zyx.length; j++) {
         if (minus[i] == zyx[j]) {
           desenc += abc[j];
+          found = true;
         }
       }
+      if (found == false) desenc += minus[i];
     }
     final fileName = './$toWrite.txt';
     new File(fileName).writeAsString(desenc).then((File file) {
